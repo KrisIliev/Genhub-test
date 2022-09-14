@@ -12,8 +12,9 @@ env:
   
 
 jobs:
-  setup-build-publish-deploy:
-    name: Setup Build Publsh Deploy
+  build:
+#     name: Setup Build Publsh Deploy
+
     runs-on: ubuntu-latest
 
     steps:
@@ -41,9 +42,9 @@ jobs:
 
 
 
-        - name: Get GKE Credentials
-          runs: |-
-            gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - name: Get GKE Credentials
+        run: |-
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
         
-        - name: Check cluster
-          run: kubectl get all
+      - name: Check cluster
+        run: kubectl get pods -n dirigible-demo
