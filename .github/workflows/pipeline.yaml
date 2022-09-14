@@ -39,18 +39,11 @@ jobs:
           service_account_key: ${{secrets.GKE_SA_KEY}}
           project_id: ${{secrets.GKE.PROJECT}}
 
-        # - name: Configure Docker
-        #   runs: |-
-        #     gcloud --quiet auth configure-docker
+
 
         - name: Get GKE Credentials
           runs: |-
             gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-
-        # - name: Build Docker Image
-        #   run: |-
-        #     docker build --tag  "gcr.io/$PROJECT_ID/$IMAGE"
         
-        # - name: Publish Docker Image to GCR
-        #   run: |- 
-        #     docker push ""
+        - name: Check cluster
+          run: kubectl get all
