@@ -44,7 +44,7 @@ jobs:
 
       - name: Get GKE Credentials
         run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE" --project "$PROJECT_ID"
         
       - name: Check cluster
         run: kubectl get pods -n dirigible-demo
