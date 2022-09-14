@@ -5,7 +5,7 @@ on:
 
 env:
   PROJECT_ID: ${{secrets.GKE_PROJECT}}
-  GKE_CLUSTER: genetic-platform
+  GKE_CLUSTER: genhub
   GKE_ZONE: europe-north1-a
   DEPLOYMENT_NAME: Genhub-test
   IMAGE: codbex-genetyllis-platform-runtime:latest
