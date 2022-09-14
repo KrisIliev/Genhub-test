@@ -48,3 +48,33 @@ jobs:
         
       - name: Check cluster
         run: kubectl get pods -n dirigible-demo
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest' # default is latest (stable)
+        id: install 
+
+      - name: Add Dirigible-Helm Repo
+        run: |-
+          helm repo add dirigible https://eclipse.github.io/dirigible 
+          helm repo update
+
+      - name: Deploy Genhub App
+        run: |-
+          helm upgrade --install app dirigible/dirigible -n dirigible-demo \
+          --set volume.enabled=true \
+          --set serviceAccount.create=false \
+          --set keycloak.serviceAccountCreate=false \
+          --set ingress.tls=true \
+          --set keycloak.enabled=true \
+          --set keycloak.install=true \
+          --set istio.enabled=true \
+          --set istio.enableHttps=true \
+          --set gke.cloudSQL=true \
+          --set gke.projectId=genetic-platform \
+          --set gke.region=europe-north1 \
+          --set ingress.host=gen.apps.quanterall.com \
+          --set gke.dirigibleSqlInstanceName=genhub \
+          --set gke.keycloakSqlInstanceName=keycloak \
+          --set dirigible.image=ghcr.io/codbex/codbex-genetyllis-keycloack-runtime:latest
